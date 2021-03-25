@@ -131,15 +131,18 @@ export default {
 
       if (this.isVmImage && this.image) {
         imageAnnotations = { 'harvester.cattle.io/imageId': this.image };
+        this.value.pvc.volumeMode = 'Block';
       } else {
         imageAnnotations = {};
+        this.value.pvc.volumeMode = 'FileSystem';
       }
 
       const spec = {
         ...this.value,
         pvc: {
           ...this.value.pvc,
-          resources: { requests: { storage: this.storage ? `${ this.storage }Gi` : null } },
+          resources:        { requests: { storage: this.storage ? `${ this.storage }Gi` : null } },
+          storageClassName: 'rook-ceph',
         },
         source,
       };

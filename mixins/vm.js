@@ -486,11 +486,12 @@ export default {
 
       switch (R.source) {
       case SOURCE_TYPE.NEW:
-        _dataVolumeTemplate.spec.pvc.storageClassName = 'longhorn'; // R.storageClassName
+        _dataVolumeTemplate.spec.pvc.storageClassName = 'rook-ceph'; // R.storageClassName
         _dataVolumeTemplate.spec.source = { blank: {} };
         break;
       case SOURCE_TYPE.IMAGE: {
-        _dataVolumeTemplate.spec.pvc.storageClassName = 'longhorn'; // R.storageClassName
+        _dataVolumeTemplate.spec.pvc.storageClassName = 'rook-ceph'; // R.storageClassName
+        _dataVolumeTemplate.spec.pvc.volumeMode = 'Block';
         _dataVolumeTemplate.spec.source = { http: { url: this.getUrlFromImage(R.image) } };
 
         const imageResource = this.getImageResource(R.image);
